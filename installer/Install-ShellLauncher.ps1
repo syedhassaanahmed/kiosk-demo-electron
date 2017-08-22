@@ -1,6 +1,6 @@
 param([string]$userName, [string]$exeName)
 
-Function LogWrite
+function LogWrite
 {
    Param ([string]$logstring)
    $logstring = "`n" + (Get-Date).ToUniversalTime() + " " + $logstring
