@@ -11,3 +11,6 @@ Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM
 - Then we create a [squirrel installer (.exe)](https://github.com/Squirrel/Squirrel.Windows) using [electron-winstaller](https://github.com/electron/windows-installer)
 - Squirrel package is then wrapped in an .msi using [MSI Wrapper](http://www.exemsi.com/documentation/msi-build-scripts) which makes sure we don't end up with double entries in `Add or remove programs` as well as execute the inside PowerShell script in an elevated way. 
 - Script is actually executed from squirrel [post-install events](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/installer/setupEvents.js) via [node-powershell](https://github.com/rannn505/node-powershell).
+
+## Limitation
+- Currently, the user for which custom shell will be enabled, is hardcoded (`kioskelectron`) inside PowerShell script. Reason for that is because Squirrel doesn't yet support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839).
