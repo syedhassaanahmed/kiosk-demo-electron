@@ -4,7 +4,7 @@ const shell = require('node-powershell')
 
 let winston = require('winston')
 winston.add(winston.transports.File, {
-    filename: 'squirrel.log',
+    filename: 'squirrel-events.log',
     handleExceptions: true,
     humanReadableUnhandledException: true
 })
