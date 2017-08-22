@@ -1,0 +1,31 @@
+{
+  "name": "KioskDemoElectron",
+  "productName": "KioskDemoElectron",
+  "version": "1.0.0",
+  "description": "KioskDemoElectron",
+  "main": "main.js",
+  "keywords": [],
+  "author": "Syed Hassaan Ahmed",
+  "license": "ISC",
+  "scripts": {
+    "start": "electron .",
+    "clean": "IF EXIST dist rd /s /q dist",
+    "pack": "electron-packager . --platform=win32 --arch=x64 --icon=app --overwrite --out ./dist",
+    "createExe": "set DEBUG=electron-windows-installer:main && node ./installer/createInstaller.js",
+    "createMsi": "msiwrapper-compiler --config=./dist/msi-wrapper.xml",
+    "dist": "npm run clean && npm run pack && npm run createExe && npm run createMsi"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "jquery-ui-dist": "^1.12.1",
+    "node-powershell": "^3.1.1",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "electron": "^1.7.5",
+    "electron-packager": "^8.7.2",
+    "electron-winstaller": "^2.6.3",
+    "msiwrapper-compiler": "^1.0.2",
+    "string-template": "^1.0.0"
+  }
+}
