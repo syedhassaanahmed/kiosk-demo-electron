@@ -1,4 +1,4 @@
-param($exeName)
+param([string]$userName, [string]$exeName)
 
 Function LogWrite
 {
@@ -8,11 +8,9 @@ Function LogWrite
    Write-Host $logstring
 }
 
-LogWrite("exeName is " + $exeName)
-
 try {
 
-    #Enable-WindowsOptionalFeature -online -FeatureName Client-EmbeddedShellLauncher -all
+    Enable-WindowsOptionalFeature -online -FeatureName Client-EmbeddedShellLauncher -all
        
     $COMPUTER = "localhost"
     $NAMESPACE = "root\standardcimv2\embedded"
@@ -28,13 +26,15 @@ try {
         return $NTUserSID.Value
     }
     
-    $Cashier_SID = Get-UsernameSID("kioskelectron")
+    LogWrite("userName is " + $userName)
+    $Cashier_SID = Get-UsernameSID($userName)
     LogWrite("Cashier_SID is " + $Cashier_SID)
 
     try {
         $ShellLauncherClass.RemoveCustomShell($Cashier_SID)
         } catch [Exception] { }
     
+    LogWrite("exeName is " + $exeName)
     $restart_shell = 0
     $ShellLauncherClass.SetCustomShell($Cashier_SID, $exeName, ($null), ($null), $restart_shell)
     

@@ -39,6 +39,7 @@ module.exports = {
 
         winston.info('Squirrel arguments: ' + process.argv)
 
+        const userName = 'kioskelectron'
         const exeName = process.argv[0]
         const installerFolder = path.join(path.dirname(exeName), 'resources', 'app', 'installer')
 
@@ -51,7 +52,10 @@ module.exports = {
                 winston.info('Squirrel Install/Update')
 
                 const installCommand = path.join(installerFolder, 'Install-ShellLauncher.ps1')
-                runPowerShell(installCommand, [{ exeName: exeName }])
+                runPowerShell(installCommand, [
+                    { userName: userName }, 
+                    { exeName: exeName }
+                ])
 
                 return true
 
@@ -59,7 +63,7 @@ module.exports = {
                 winston.info('Squirrel Uninstall')
 
                 const uninstallCommand = path.join(installerFolder, 'Uninstall-ShellLauncher.ps1')
-                runPowerShell(`& "${uninstallCommand}"`)
+                runPowerShell(uninstallCommand, [{ userName: userName }])
 
                 return true
 

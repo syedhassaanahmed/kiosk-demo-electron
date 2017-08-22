@@ -1,3 +1,5 @@
+param([string]$userName)
+
 Function LogWrite
 {
    Param ([string]$logstring)
@@ -19,7 +21,8 @@ try {
         return $NTUserSID.Value
     }
     
-    $Cashier_SID = Get-UsernameSID("kioskelectron")
+    LogWrite("userName is " + $userName)
+    $Cashier_SID = Get-UsernameSID($userName)
     LogWrite("Cashier_SID is " + $Cashier_SID)
     
     try {
