@@ -1,0 +1,9 @@
+install:
+  - ps: Install-Product node 8
+  - node --version
+  - npm --version
+  - npm install
+build_script:
+ - npm run dist
+artifacts:
+  - path: .\dist\*.msi
