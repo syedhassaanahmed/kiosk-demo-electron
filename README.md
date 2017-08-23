@@ -6,14 +6,18 @@ This Electron App demonstrates Kiosk mode and creates .msi package which execute
 Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
 
 ## Create Installer
-**NOTE:** `electron-packager` currently has an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use `npm install -g npm@5.2.0` until the issue is resolved.
+[MSI Wrapper](http://www.exemsi.com/download) must be installed on your machine in order to create the .msi, otherwise you'll get 
+
+`Retrieving the COM class factory for component with CLSID {06983BA0-AE1E-43B4-83B6-8D6D5DFA5CEB} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).`
+
+**NOTE:** `electron-packager` currently has an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use `npm install -g npm@5.2.0` until its resolved.
 
 `npm run dist` will build everything and create the .msi in `dist` folder.
 
 ## Description
 - First we package the app using [electron-packager](https://github.com/electron-userland/electron-packager)
 - Then we create a [squirrel installer (.exe)](https://github.com/Squirrel/Squirrel.Windows) using [electron-winstaller](https://github.com/electron/windows-installer)
-- Squirrel package is then wrapped in an .msi using [MSI Wrapper](http://www.exemsi.com/documentation/msi-build-scripts) which makes sure we don't end up with double entries in `Add or remove programs` as well as execute the inside PowerShell script in an elevated way. 
+- Squirrel package is then wrapped in an .msi using [MSI Wrapper script](http://www.exemsi.com/documentation/msi-build-scripts) which makes sure we don't end up with double entries in `Add or remove programs` as well as execute the inside PowerShell script in an elevated way. 
 - Script is actually executed from squirrel [post-install events](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/installer/setupEvents.js) via [node-powershell](https://github.com/rannn505/node-powershell).
 
 ## Troubleshoot
