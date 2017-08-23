@@ -11,3 +11,4 @@ build_script:
  - npm run dist
 artifacts:
   - path: .\dist\*.msi
+    name: installer
