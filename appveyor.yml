@@ -7,3 +7,6 @@ build_script:
  - npm run dist
 artifacts:
   - path: .\dist\*.msi
+    name: installer
+  - path: C:\Users\appveyor\AppData\Roaming\npm-cache\_logs\*-debug.log
+    name: npm-logs
