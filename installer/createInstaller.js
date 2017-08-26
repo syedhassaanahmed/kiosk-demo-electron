@@ -1,4 +1,5 @@
 const electronInstaller = require('electron-winstaller')
+const config = require('../package.json')
 const format = require('string-template')
 const fs = require('fs')
 const path = require('path')
@@ -8,7 +9,7 @@ const outputDirectory = './dist'
 let resultPromise = electronInstaller.createWindowsInstaller({
     appDirectory: path.join(outputDirectory, 'KioskDemoElectron-win32-x64'), 
     outputDirectory: outputDirectory,
-    authors: 'Syed Hassaan Ahmed',
+    authors: config.author,
     noMsi: true //we'll do it with msi wrapper
   })
 
@@ -18,9 +19,13 @@ resultPromise.then(() => {
 
   const encoding = 'utf-8'
   const msiTemplate = fs.readFileSync('./installer/msi-wrapper-template.xml', encoding)
+
   const finalMsiXml = format(msiTemplate, {
     msiOutputPath: path.join(outputDirectory, `${setupName}.msi`),
-    setupExePath: setupExePath
+    setupExePath: setupExePath,
+    author: config.author,
+    appVersion: config.version,
+    productName: config.productName
   })
 
   console.log(finalMsiXml)

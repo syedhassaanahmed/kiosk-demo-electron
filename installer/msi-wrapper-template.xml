@@ -7,9 +7,9 @@
     <ElevateExecutable Value="always" />
     <UpgradeCode Value="{FE8F4A01-B732-4AC3-9D24-D8C84CA6E70E}" />
     <ProductId Value="" />
-    <Manufacturer Detect="executable" Value="Syed Hassaan Ahmed" />
-    <ProductVersion Detect="executable" Value="1.0.0.0" />
-    <ProductName Detect="executable" Value="KioskDemoElectron" />
+    <Manufacturer Detect="executable" Value="{author}" />
+    <ProductVersion Detect="executable" Value="{appVersion}" />
+    <ProductName Detect="executable" Value="{productName}" />
     <Comments Detect="executable" Value="" />
     <Contact Detect="" Value="" />
     <HelpLink Detect="" Value="" />
@@ -18,7 +18,7 @@
   </Installer>
   <WrappedInstaller>
     <Executable FileName="{setupExePath}" SuccessCodes="" Impersonate="yes" />
-    <ApplicationId Value="KioskDemoElectron" />
+    <ApplicationId Value="{productName}" />
     <Install>
       <Arguments Value="">
         <UILevelNone Value="" />
