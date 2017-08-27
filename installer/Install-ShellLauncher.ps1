@@ -31,11 +31,18 @@ try {
     LogWrite("Cashier_SID is " + $Cashier_SID)
 
     try {
+        # Remove previous custom shell otherwise setting it again will fail
         $ShellLauncherClass.RemoveCustomShell($Cashier_SID)
         } catch [Exception] { }
     
-    LogWrite("exeName is " + $exeName)
     $restart_shell = 0
+
+    # Explicitly set default shell to explorer.exe otherwise modifying cutom shell would change it to cmd.exe for users other than cashier
+    $ShellLauncherClass.SetDefaultShell("explorer.exe", $restart_shell)
+    $DefaultShellObject = $ShellLauncherClass.GetDefaultShell()        
+    LogWrite("Default Shell is set to " + $DefaultShellObject.Shell + " and the default action is set to " + $DefaultShellObject.defaultaction)
+
+    LogWrite("exeName is " + $exeName)    
     $ShellLauncherClass.SetCustomShell($Cashier_SID, $exeName, ($null), ($null), $restart_shell)
     
     LogWrite("New settings for custom shells:")
