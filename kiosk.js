@@ -17,8 +17,8 @@ $(function () {
             autoplay: true,
             loop: true,
             class: 'video'
-        });
-        video.appendTo($('#videosContainer'));
+        })
+        video.appendTo($('#videosContainer'))
     }
 
     $("#videosContainer").sortable()

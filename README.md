@@ -20,6 +20,9 @@ Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM
 - Squirrel package is then wrapped in an .msi using [MSI Wrapper script](http://www.exemsi.com/documentation/msi-build-scripts) which makes sure we don't end up with double entries in `Add or remove programs` as well as execute the inside PowerShell script in an elevated way. 
 - Script is actually executed from squirrel [post-install events](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/installer/setupEvents.js) via [node-powershell](https://github.com/rannn505/node-powershell).
 
+## Telemetry
+The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-nodejs) to collect basic telemetry data from the Kiosk app. To enable it, create an environment variable named `APPINSIGHTS_INSTRUMENTATIONKEY`.
+
 ## Troubleshoot
 All logs (Squirrel setup, install events as well as PowerShell) will be located at `%userprofile%\AppData\Local\SquirrelTemp`
 
