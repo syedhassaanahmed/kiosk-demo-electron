@@ -10,7 +10,7 @@ Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM
 
 `Retrieving the COM class factory for component with CLSID {06983BA0-AE1E-43B4-83B6-8D6D5DFA5CEB} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).`
 
-**NOTE:** `electron-packager` currently has an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use `npm install -g npm@5.2.0` until its resolved.
+**NOTE:** `electron-packager` had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm `npm update -g npm`.
 
 `npm run dist` will build everything and create the .msi in `dist` folder.
 

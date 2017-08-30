@@ -1,7 +1,6 @@
 install:
   - ps: Install-Product node 8
   - node --version
-  - npm install -g npm@5.2.0
   - npm --version
   - npm install
   - ps: "[Net.ServicePointManager]::SecurityProtocol = 'Ssl3, Tls, Tls11, Tls12'"
