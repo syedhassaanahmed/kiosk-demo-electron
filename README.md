@@ -10,7 +10,7 @@ Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM
 
 `Retrieving the COM class factory for component with CLSID {06983BA0-AE1E-43B4-83B6-8D6D5DFA5CEB} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).`
 
-**NOTE:** `electron-packager` had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm `npm update -g npm`.
+**NOTE:** `electron-packager` had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm (`npm update -g npm`).
 
 `npm run dist` will build everything and create the .msi in `dist` folder.
 
@@ -27,4 +27,6 @@ The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/
 All logs (Squirrel setup, install events as well as PowerShell) will be located at `%userprofile%\AppData\Local\SquirrelTemp`
 
 ## Limitation
-Currently, the user for which custom shell needs to be enabled, is hardcoded inside Squirrel events (`kioskelectron`). That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet.
+- Due to an [electron-winstaller limitation](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/fcddc95c542f43141e1bee073837b26b2b6991d1/package.json#L2), `name` field must not contain special characters. e.g `"-"`.
+
+- The user for which custom shell needs to be enabled, is hardcoded inside Squirrel events (`kioskelectron`). That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet.
