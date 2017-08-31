@@ -5,23 +5,24 @@ const fs = require('fs')
 const path = require('path')
 
 const outputDirectory = './dist'
+const appName = 'KioskDemoElectron'
 
 let resultPromise = electronInstaller.createWindowsInstaller({
-    appDirectory: path.join(outputDirectory, 'KioskDemoElectron-win32-x64'), 
+    appDirectory: path.join(outputDirectory, `${appName}-win32-x64`), 
     outputDirectory: outputDirectory,
     authors: config.author,
     noMsi: true //we'll do it with msi wrapper
   })
 
 resultPromise.then(() => {
-  const setupName = 'KioskDemoElectronSetup'
+  const setupName = `${appName}Setup`
   const setupExePath = path.resolve(path.join(outputDirectory, `${setupName}.exe`))
 
   const encoding = 'utf-8'
   const msiTemplate = fs.readFileSync('./installer/msi-wrapper-template.xml', encoding)
 
   const finalMsiXml = format(msiTemplate, {
-    msiOutputPath: path.join(outputDirectory, `${setupName}.msi`),
+    msiOutputPath: path.resolve(path.join(outputDirectory, `${setupName}.msi`)),
     setupExePath: setupExePath,
     author: config.author,
     appVersion: config.version,
