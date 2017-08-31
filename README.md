@@ -5,13 +5,15 @@ This Electron App demonstrates Kiosk mode and creates .msi package which execute
 
 Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
 
-## Create Installer
-[MSI Wrapper](http://www.exemsi.com/download) must be installed on your machine in order to create the .msi, otherwise you'll get 
+## Caveats
+- `electron-packager` had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm (`npm update -g npm`).
+- Due to an [electron-winstaller limitation](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/fcddc95c542f43141e1bee073837b26b2b6991d1/package.json#L2), `name` and `productName` fields in `package.json` must not contain special characters. e.g `"-"`.
+- `productName`, `Description` and `Author` fields are [required in package.json](https://github.com/electron-userland/electron-forge/issues/207#issuecomment-297192973) for `electron-winstaller` to work.
+- [MSI Wrapper](http://www.exemsi.com/download) must be installed on your machine in order to create the .msi, otherwise you'll get 
 
 `Retrieving the COM class factory for component with CLSID {06983BA0-AE1E-43B4-83B6-8D6D5DFA5CEB} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).`
 
-**NOTE:** `electron-packager` had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm (`npm update -g npm`).
-
+## Create Installer
 `npm run dist` will build everything and create the .msi in `dist` folder.
 
 ## Description
@@ -27,8 +29,4 @@ The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/
 All logs (Squirrel setup, install events as well as PowerShell) will be located at `%userprofile%\AppData\Local\SquirrelTemp`
 
 ## Limitation
-- Due to an [electron-winstaller limitation](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/fcddc95c542f43141e1bee073837b26b2b6991d1/package.json#L2), `name` and `productName` fields in `package.json` must not contain special characters. e.g `"-"`.
-
-- `productName`, `Description` and `Author` fields are [required in package.json](https://github.com/electron-userland/electron-forge/issues/207#issuecomment-297192973) for `electron-winstaller` to work
-
-- The user for which custom shell needs to be enabled, is hardcoded inside Squirrel events (`kioskelectron`). That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet.
+The user for which custom shell needs to be enabled, is hardcoded inside Squirrel events (`kioskelectron`). That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet.
