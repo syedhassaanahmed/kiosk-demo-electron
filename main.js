@@ -28,8 +28,7 @@ app.on('ready', _ => {
     mainWindow.loadURL(`file://${__dirname}/kiosk.html`)
 
     mainWindow.on('close', _ => {
-        mainWindow = null
+        mainWindow = null;
+        app.quit();
     });
-
-    console.log(electron.screen.getAllDisplays());
 })

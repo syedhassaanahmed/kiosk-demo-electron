@@ -13,11 +13,10 @@ function KioskManager (window) {
         let dimensions = this.allScreenDimensions[screenIndex];
         let featureString = this._buildFeatureString(dimensions);
 
-        console.log(dimensions);
-        console.log(featureString);
-
         let newWindow = this.window.open(url, '', featureString);
         this.screenWindows[screenIndex] = newWindow;
+
+        return newWindow;
     };
 
     this.closeWindowForScreenIndex = (screenIndex) => {

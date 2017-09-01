@@ -2,10 +2,11 @@ const kioskManager = require('./kiosk-manager')(window);
 
 const express = require('express')
 const serveStatic = require('serve-static')
+const path = require('path');
 
 const app = express()
 
-app.use(serveStatic('content-package/', {'index': false}))
+app.use(serveStatic(path.join(__dirname, 'content-package'), {'index': false}));
 app.listen(3000)
 
 const content = [
@@ -15,5 +16,8 @@ const content = [
 ];
 
 for (let index=0; index < kioskManager.allScreenDimensions.length; index++) {
-    kioskManager.openWindowForScreenIndex(content[index], index);
+    let newWindow = kioskManager.openWindowForScreenIndex(content[index], index);
+    newWindow.onbeforeunload = function () {
+        return false;
+    }
 }
