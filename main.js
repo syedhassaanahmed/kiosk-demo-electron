@@ -1,4 +1,4 @@
-const appInsights = require("applicationinsights")
+const appInsights = require("applicationinsights");
 if(process.env.APPINSIGHTS_INSTRUMENTATIONKEY !== undefined)
     appInsights.setup()
         .setAutoDependencyCorrelation(true)
@@ -14,7 +14,8 @@ if (setupEvents.handleSquirrelEvent()) {
     return
 }
 
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow} = require('electron')
+const electron = require('electron');
 
 let mainWindow = null
 
@@ -28,5 +29,7 @@ app.on('ready', _ => {
 
     mainWindow.on('close', _ => {
         mainWindow = null
-    })
+    });
+
+    console.log(electron.screen.getAllDisplays());
 })
