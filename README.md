@@ -4,7 +4,7 @@
 This Electron App demonstrates multi-screen Kiosk mode experience by creating an .msi package which executes a [PowerShell script](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/src/installer/Install-ShellLauncher.ps1). Script enables [Windows 10 Shell Launcher](https://docs.microsoft.com/en-us/windows-hardware/customize/enterprise/shell-launcher) as well as set the kiosk user to [AutoLogon](https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon). Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
 
 ## Configure
-Kiosk parameters are read from `config.json` inside Squirrel events. That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet. Please create a config file in `src` folder with the following content; 
+Kiosk parameters are read from `config.json` inside [Squirrel events](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/src/installer/setupEvents.js). That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet. Please create a config file in `src` folder with the following content; 
 ```json
 { 
     "kioskUserName": "<put your username here>",
@@ -28,7 +28,7 @@ Kiosk parameters are read from `config.json` inside Squirrel events. That's beca
 - First we package the app using [electron-packager](https://github.com/electron-userland/electron-packager)
 - Then we create a [squirrel installer (.exe)](https://github.com/Squirrel/Squirrel.Windows) using [electron-winstaller](https://github.com/electron/windows-installer)
 - Squirrel package is then wrapped in an .msi using [MSI Wrapper script](http://www.exemsi.com/documentation/msi-build-scripts) which makes sure we don't end up with double entries in `Add or remove programs` as well as execute the inside PowerShell script in an elevated way. 
-- Script is actually executed from squirrel [post-install events](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/src/installer/setupEvents.js) via [node-powershell](https://github.com/rannn505/node-powershell).
+- Script is actually executed from squirrel [post-install events](https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/using/custom-squirrel-events-non-cs.md) via [node-powershell](https://github.com/rannn505/node-powershell).
 
 ## Telemetry
 The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-nodejs) to collect basic telemetry data from the app. To enable it, please add a key named `appInsightsInstrumentationKey` in `src/config.json` and set it to the Instrumentation Key obtained from Azure portal.
