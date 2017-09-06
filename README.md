@@ -6,7 +6,8 @@ This Electron App demonstrates multi-screen Kiosk mode and creates .msi package 
 Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
 
 ## Caveats
-- Kiosk username is read from `.env` file inside Squirrel events. Please create an env file with variable named `KIOSK_USER_NAME`. That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet.
+- `kioskUserName` is read from `config.json` inside Squirrel events. That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet. Please create a config file in root like this one `{ "kioskUserName": "<put your username here>" }`
+
 - `electron-packager` had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm (`npm update -g npm`).
 - Due to an [electron-winstaller limitation](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/fcddc95c542f43141e1bee073837b26b2b6991d1/package.json#L2), `name` and `productName` fields in `package.json` must not contain special characters. e.g `"-"`.
 - `productName`, `Description` and `Author` fields are [required in package.json](https://github.com/electron-userland/electron-forge/issues/207#issuecomment-297192973) for `electron-winstaller` to work.
@@ -17,14 +18,14 @@ Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM
 ## Create Installer
 `npm run dist` will build everything and create the .msi in `dist` folder.
 
-## Description
+## How it works
 - First we package the app using [electron-packager](https://github.com/electron-userland/electron-packager)
 - Then we create a [squirrel installer (.exe)](https://github.com/Squirrel/Squirrel.Windows) using [electron-winstaller](https://github.com/electron/windows-installer)
 - Squirrel package is then wrapped in an .msi using [MSI Wrapper script](http://www.exemsi.com/documentation/msi-build-scripts) which makes sure we don't end up with double entries in `Add or remove programs` as well as execute the inside PowerShell script in an elevated way. 
 - Script is actually executed from squirrel [post-install events](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/installer/setupEvents.js) via [node-powershell](https://github.com/rannn505/node-powershell).
 
 ## Telemetry
-The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-nodejs) to collect basic telemetry data from the Kiosk app. To enable it, create an environment variable named `APPINSIGHTS_INSTRUMENTATIONKEY` and set it to your Instrumentation Key.
+The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-nodejs) to collect basic telemetry data from the app. To enable it, please add a key named `appInsightsInstrumentationKey` in config.json and set it to the Instrumentation Key obtained from Azure portal.
 
 ## Troubleshoot
 All logs (Squirrel setup, install events as well as PowerShell) will be located at `%userprofile%\AppData\Local\SquirrelTemp`

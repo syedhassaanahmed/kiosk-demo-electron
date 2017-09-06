@@ -1,8 +1,7 @@
-require('dotenv').config()
-
+const config = require('./config.json')
 const appInsights = require("applicationinsights")
-if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY !== undefined)
-    appInsights.setup()
+if (config.appInsightsInstrumentationKey !== undefined)
+    appInsights.setup(config.appInsightsInstrumentationKey)
         .setAutoDependencyCorrelation(true)
         .setAutoCollectRequests(true)
         .setAutoCollectPerformance(true)

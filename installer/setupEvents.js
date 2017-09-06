@@ -1,6 +1,7 @@
 const { app } = require('electron')
 const path = require('path')
 const shell = require('node-powershell')
+const config = require('../config.json')
 
 let winston = require('winston')
 winston.add(winston.transports.File, {
@@ -52,7 +53,7 @@ module.exports = {
 
                 const installCommand = path.join(installerFolder, 'Install-ShellLauncher.ps1')
                 runPowerShell(installCommand, [
-                    { userName: process.env.KIOSK_USER_NAME }, 
+                    { userName: config.kioskUserName }, 
                     { exeName: exeName }
                 ])
 
