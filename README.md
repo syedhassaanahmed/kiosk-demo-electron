@@ -4,7 +4,7 @@
 This Electron App demonstrates multi-screen Kiosk mode experience by creating .msi package which executes a [PowerShell script](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/installer/Install-ShellLauncher.ps1). Script enables [Windows 10 Shell Launcher](https://docs.microsoft.com/en-us/windows-hardware/customize/enterprise/shell-launcher) as well as set the kiosk user to [AutoLogon](https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon). Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
 
 ## Caveats
-- Kiosk parameters are read from `src/config.json` inside Squirrel events. That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet. Please create a config file in src with following content; 
+- Kiosk parameters are read from `config.json` inside Squirrel events. That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet. Please create a config file in `src` folder with following content; 
 
 `{ 
     "kioskUserName": "<put your username here>",
