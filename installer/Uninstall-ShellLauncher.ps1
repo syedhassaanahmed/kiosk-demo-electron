@@ -1,11 +1,11 @@
-param([string]$userName)
+param($UserName)
 
 function LogWrite
 {
-   Param ([string]$logstring)
-   $logstring = "`n" + (Get-Date).ToUniversalTime() + " " + $logstring
-   Add-content "powershell.log" -value $logstring
-   Write-Host $logstring
+   param ($Logstring)
+   $Logstring = "`n" + (Get-Date).ToUniversalTime() + " " + $Logstring
+   Add-content "powershell.log" -value $Logstring
+   Write-Host $Logstring
 }
 
 try {
@@ -21,8 +21,8 @@ try {
         return $NTUserSID.Value
     }
     
-    LogWrite("userName is " + $userName)
-    $Cashier_SID = Get-UsernameSID($userName)
+    LogWrite("UserName is " + $UserName)
+    $Cashier_SID = Get-UsernameSID($UserName)
     LogWrite("Cashier_SID is " + $Cashier_SID)
     
     try {
@@ -38,6 +38,13 @@ try {
     $ShellLauncherClass.SetEnabled($FALSE)
     $IsShellLauncherEnabled = $ShellLauncherClass.IsEnabled()
     LogWrite("Shell Launcher Enabled is set to " + $IsShellLauncherEnabled.Enabled)
+
+    # Reset Autologon registry
+    $RegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+    Set-ItemProperty $RegPath "AutoAdminLogon" -Value "0" -type String  
+    Set-ItemProperty $RegPath "DefaultUsername" -Value "" -type String  
+    Set-ItemProperty $RegPath "DefaultPassword" -Value "" -type String
+    Set-ItemProperty $RegPath "AutoLogonCount" -Value "0" -type DWord
 
 } catch [Exception] {
     LogWrite($_.Exception.Message)

@@ -1,12 +1,16 @@
 # kiosk-demo-electron
 [![Build status](https://ci.appveyor.com/api/projects/status/um6ul6dbwjrw913m/branch/master?svg=true)](https://ci.appveyor.com/project/syedhassaanahmed/kiosk-demo-electron/branch/master)
 
-This Electron App demonstrates multi-screen Kiosk mode and creates .msi package which executes a [PowerShell script](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/installer/Install-ShellLauncher.ps1) to enable [Windows 10 Shell Launcher](https://docs.microsoft.com/en-us/windows-hardware/customize/enterprise/shell-launcher) and set the app executable as custom shell.
-
-Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
+This Electron App demonstrates multi-screen Kiosk mode experience by creating .msi package which executes a [PowerShell script](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/installer/Install-ShellLauncher.ps1). Script enables [Windows 10 Shell Launcher](https://docs.microsoft.com/en-us/windows-hardware/customize/enterprise/shell-launcher) as well as set the kiosk user to [AutoLogon](https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon). Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
 
 ## Caveats
-- `kioskUserName` is read from `config.json` inside Squirrel events. That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet. Please create a config file in root like this one `{ "kioskUserName": "<put your username here>" }`
+- Kiosk params (`username`, `password` and `autoLogonCount`) are read from `config.json` inside Squirrel events. That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet. Please create a config file in root like this one 
+
+`{ 
+    "kioskUserName": "<put your username here>",
+    "kioskPassword": "<put your kiosk password>",
+    "autoLogonCount": "<number of times system would reboot without asking for credentials>"
+}`
 
 - `electron-packager` had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm (`npm update -g npm`).
 - Due to an [electron-winstaller limitation](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/fcddc95c542f43141e1bee073837b26b2b6991d1/package.json#L2), `name` and `productName` fields in `package.json` must not contain special characters. e.g `"-"`.
@@ -28,4 +32,4 @@ Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM
 The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-nodejs) to collect basic telemetry data from the app. To enable it, please add a key named `appInsightsInstrumentationKey` in config.json and set it to the Instrumentation Key obtained from Azure portal.
 
 ## Troubleshoot
-All logs (Squirrel setup, install events as well as PowerShell) will be located at `%userprofile%\AppData\Local\SquirrelTemp`
+All logs (Squirrel setup, install events as well as PowerShell) will be located at `%localappdata%\SquirrelTemp`

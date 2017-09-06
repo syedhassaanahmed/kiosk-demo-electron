@@ -53,8 +53,10 @@ module.exports = {
 
                 const installCommand = path.join(installerFolder, 'Install-ShellLauncher.ps1')
                 runPowerShell(installCommand, [
-                    { userName: config.kioskUserName }, 
-                    { exeName: exeName }
+                    { UserName: config.kioskUserName }, 
+                    { Password: config.kioskPassword }, 
+                    { ExeName: exeName },
+                    { AutoLogonCount: config.autoLogonCount }
                 ])
 
                 return true
@@ -63,7 +65,7 @@ module.exports = {
                 winston.info('Squirrel Uninstall')
 
                 const uninstallCommand = path.join(installerFolder, 'Uninstall-ShellLauncher.ps1')
-                runPowerShell(uninstallCommand, [{ userName: userName }])
+                runPowerShell(uninstallCommand, [{ userName: config.kioskUserName }])
 
                 return true
 
