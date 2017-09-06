@@ -1,0 +1,18 @@
+{
+  "name": "KioskDemoElectron",
+  "productName": "KioskDemoElectron",
+  "version": "1.0.0",
+  "description": "KioskDemoElectron",
+  "keywords": [],
+  "author": "Syed Hassaan Ahmed",
+  "license": "ISC",
+  "dependencies": {
+    "applicationinsights": "^0.21.0",
+    "express": "^4.15.4",
+    "jquery": "^3.2.1",
+    "jquery-ui-dist": "^1.12.1",
+    "node-powershell": "^3.1.1",
+    "serve-static": "^1.12.4",
+    "winston": "^2.3.1"
+  }
+}

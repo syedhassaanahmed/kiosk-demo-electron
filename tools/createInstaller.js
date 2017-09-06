@@ -1,5 +1,5 @@
 const electronInstaller = require('electron-winstaller')
-const config = require('../package.json')
+const package = require('../src/package.json')
 const format = require('string-template')
 const fs = require('fs')
 const path = require('path')
@@ -10,7 +10,7 @@ const appName = 'KioskDemoElectron'
 let resultPromise = electronInstaller.createWindowsInstaller({
     appDirectory: path.join(outputDirectory, `${appName}-win32-x64`), 
     outputDirectory: outputDirectory,
-    authors: config.author,
+    authors: package.author,
     noMsi: true //we'll do it with msi wrapper
   })
 
@@ -19,14 +19,14 @@ resultPromise.then(() => {
   const setupExePath = path.resolve(path.join(outputDirectory, `${setupName}.exe`))
 
   const encoding = 'utf-8'
-  const msiTemplate = fs.readFileSync('./installer/msi-wrapper-template.xml', encoding)
+  const msiTemplate = fs.readFileSync('./tools/msi-wrapper-template.xml', encoding)
 
   const finalMsiXml = format(msiTemplate, {
     msiOutputPath: path.resolve(path.join(outputDirectory, `${setupName}.msi`)),
     setupExePath: setupExePath,
-    author: config.author,
-    appVersion: config.version,
-    productName: config.productName
+    author: package.author,
+    appVersion: package.version,
+    productName: package.productName
   })
 
   console.log(finalMsiXml)
