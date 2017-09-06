@@ -4,7 +4,7 @@
 This Electron App demonstrates multi-screen Kiosk mode experience by creating .msi package which executes a [PowerShell script](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/installer/Install-ShellLauncher.ps1). Script enables [Windows 10 Shell Launcher](https://docs.microsoft.com/en-us/windows-hardware/customize/enterprise/shell-launcher) as well as set the kiosk user to [AutoLogon](https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon). Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
 
 ## Caveats
-- Kiosk parameters are read from `config.json` inside Squirrel events. That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet. Please create a config file in root like this one 
+- Kiosk parameters are read from `src/config.json` inside Squirrel events. That's because Squirrel doesn't support [passing arguments to Setup.exe](https://github.com/Squirrel/Squirrel.Windows/issues/839) yet. Please create a config file in src with following content; 
 
 `{ 
     "kioskUserName": "<put your username here>",
@@ -13,8 +13,8 @@ This Electron App demonstrates multi-screen Kiosk mode experience by creating .m
 }`
 
 - `electron-packager` had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm (`npm update -g npm`).
-- Due to an [electron-winstaller limitation](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/fcddc95c542f43141e1bee073837b26b2b6991d1/package.json#L2), `name` and `productName` fields in `package.json` must not contain special characters. e.g `"-"`.
-- `productName`, `Description` and `Author` fields are [required in package.json](https://github.com/electron-userland/electron-forge/issues/207#issuecomment-297192973) for `electron-winstaller` to work.
+- Due to an [electron-winstaller limitation](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/fcddc95c542f43141e1bee073837b26b2b6991d1/package.json#L2), `name` and `productName` fields in `src/package.json` must not contain special characters. e.g `"-"`.
+- `productName`, `Description` and `Author` fields are [required in src/package.json](https://github.com/electron-userland/electron-forge/issues/207#issuecomment-297192973) for `electron-winstaller` to work.
 - [MSI Wrapper](http://www.exemsi.com/download) **must be installed** on your machine in order to create the .msi, otherwise you'll get 
 
 `Retrieving the COM class factory for component with CLSID {06983BA0-AE1E-43B4-83B6-8D6D5DFA5CEB} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).`
@@ -29,7 +29,7 @@ This Electron App demonstrates multi-screen Kiosk mode experience by creating .m
 - Script is actually executed from squirrel [post-install events](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/installer/setupEvents.js) via [node-powershell](https://github.com/rannn505/node-powershell).
 
 ## Telemetry
-The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-nodejs) to collect basic telemetry data from the app. To enable it, please add a key named `appInsightsInstrumentationKey` in config.json and set it to the Instrumentation Key obtained from Azure portal.
+The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-nodejs) to collect basic telemetry data from the app. To enable it, please add a key named `appInsightsInstrumentationKey` in `src/config.json` and set it to the Instrumentation Key obtained from Azure portal.
 
 ## Troubleshoot
 All logs (Squirrel setup, install events as well as PowerShell) will be located at `%localappdata%\SquirrelTemp`
