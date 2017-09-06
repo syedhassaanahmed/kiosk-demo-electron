@@ -1,5 +1,7 @@
-const appInsights = require("applicationinsights");
-if(process.env.APPINSIGHTS_INSTRUMENTATIONKEY !== undefined)
+require('dotenv').config()
+
+const appInsights = require("applicationinsights")
+if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY !== undefined)
     appInsights.setup()
         .setAutoDependencyCorrelation(true)
         .setAutoCollectRequests(true)
@@ -15,7 +17,6 @@ if (setupEvents.handleSquirrelEvent()) {
 }
 
 const { app, BrowserWindow} = require('electron')
-const electron = require('electron');
 
 let mainWindow = null
 
@@ -28,7 +29,7 @@ app.on('ready', _ => {
     mainWindow.loadURL(`file://${__dirname}/kiosk.html`)
 
     mainWindow.on('close', _ => {
-        mainWindow = null;
-        app.quit();
-    });
+        mainWindow = null
+        app.quit()
+    })
 })

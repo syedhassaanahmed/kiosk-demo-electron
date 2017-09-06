@@ -39,7 +39,6 @@ module.exports = {
 
         winston.info('Squirrel arguments: ' + process.argv)
 
-        const userName = 'kioskelectron'
         const exeName = process.argv[0]
         const installerFolder = path.join(path.dirname(exeName), 'resources', 'app', 'installer')
 
@@ -53,7 +52,7 @@ module.exports = {
 
                 const installCommand = path.join(installerFolder, 'Install-ShellLauncher.ps1')
                 runPowerShell(installCommand, [
-                    { userName: userName }, 
+                    { userName: process.env.KIOSK_USER_NAME }, 
                     { exeName: exeName }
                 ])
 
