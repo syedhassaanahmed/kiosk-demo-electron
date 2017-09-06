@@ -9,7 +9,7 @@
   "license": "ISC",
   "scripts": {
     "start": "electron .",
-    "clean": "IF EXIST dist rd /s /q dist",
+    "clean": "rimraf ./dist",
     "pack": "electron-packager . --platform=win32 --arch=x64 --icon=app --overwrite --out ./dist",
     "createExe": "set DEBUG=electron-windows-installer:main && node ./installer/createInstaller.js",
     "createMsi": "msiwrapper-compiler --config=./dist/msi-wrapper.xml",
@@ -30,6 +30,7 @@
     "electron-packager": "^8.7.2",
     "electron-winstaller": "^2.6.3",
     "msiwrapper-compiler": "^1.0.2",
+    "rimraf": "^2.6.1",
     "string-template": "^1.0.0"
   }
 }
