@@ -14,9 +14,10 @@ Kiosk parameters are read from `config.json` inside [Squirrel events](https://gi
 ```
 
 ## Caveats
-- `electron-packager` had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm (`npm update -g npm`).
+- electron-packager had an [issue with npm v5.3.0](https://github.com/electron-userland/electron-packager/issues/686), so please use an updated version of npm (`npm update -g npm`).
 - Due to an [electron-winstaller limitation](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/fcddc95c542f43141e1bee073837b26b2b6991d1/package.json#L2), `name` and `productName` fields in `src/package.json` must not contain special characters. e.g `"-"`.
-- `productName`, `description` and `author` fields are [required in src/package.json](https://github.com/electron-userland/electron-forge/issues/207#issuecomment-297192973) for `electron-winstaller` to work.
+- `productName`, `description` and `author` fields are [required in src/package.json](https://github.com/electron-userland/electron-forge/issues/207#issuecomment-297192973) for electron-winstaller to work.
+- In order for node-powershell to execute the PowerShell script successfully, please make sure that you're **NOT using asar**, i.e remove `--asar=true` from electron-packager.
 - [MSI Wrapper](http://www.exemsi.com/download) **must be installed** on your machine in order to create the .msi, otherwise you'll get 
 
 `Retrieving the COM class factory for component with CLSID {06983BA0-AE1E-43B4-83B6-8D6D5DFA5CEB} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).`
