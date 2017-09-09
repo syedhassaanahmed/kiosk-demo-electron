@@ -14,7 +14,7 @@ Kiosk parameters are passed to the installer like this: `KioskDemoElectron.msi K
 ## How it works
 - First we package the app using [electron-packager](https://github.com/electron-userland/electron-packager)
 - Then we harvest binaries produced by electron-packager using WiX's [Heat tool](http://wixtoolset.org/documentation/manual/v3/overview/heat.html).
-- We also copy our PowerShell script into the root of electron-packager output. We could let the harvester take care of PowerShell files as well, but we wanted to explicitly specify them in `product.wxs` with [Custom Actions](http://wixtoolset.org/documentation/manual/v3/overview/light.html).
+- We also copy our PowerShell script into the root of electron-packager output. We could let the harvester take care of PowerShell files as well, but we wanted to explicitly specify them in `product.wxs` with [Custom Actions](http://wixtoolset.org/documentation/manual/v3/wixdev/extensions/authoring_custom_actions.html).
 - Output of harvest tool is `heat.wxs` which contains a [Fragment](https://www.firegiant.com/wix/tutorial/upgrades-and-modularization/fragments/) with list of files. We take that as well as `product.wxs` and pass it to the [Candle tool](http://wixtoolset.org/documentation/manual/v3/overview/candle.html). Candle is responsible for preprocessing .wxs files and generates compiled `.wixobj` files.
 - Finally we use the [Light tool](http://wixtoolset.org/documentation/manual/v3/overview/light.html) to generate msi from .wixobj.
 - PowerShell Scripts are executed from [WiX Custom Actions](https://damienbod.com/2013/09/01/wix-installer-with-powershell-scripts/).
