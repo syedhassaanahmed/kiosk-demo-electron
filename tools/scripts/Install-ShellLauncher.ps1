@@ -10,7 +10,7 @@ function LogWrite
 
 try {
 
-    Enable-WindowsOptionalFeature -online -FeatureName Client-EmbeddedShellLauncher -all
+    Enable-WindowsOptionalFeature -online -FeatureName Client-EmbeddedShellLauncher -all -NoRestart
        
     $COMPUTER = "localhost"
     $NAMESPACE = "root\standardcimv2\embedded"

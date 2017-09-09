@@ -1,20 +1,26 @@
 {
   "main": "./src/index.js",
+  "config": {
+    "binaries": "./dist/kiosk-demo-electron-win32-x64"
+  },
   "scripts": {
     "start": "electron .",
     "postinstall": "cd src && npm install",
     "clean": "rimraf ./dist",
-    "pack": "electron-packager ./src --platform=win32 --arch=x64 --overwrite --out ./dist",
-    "build:exe": "set DEBUG=electron-windows-installer:main && node ./tools/createInstaller.js",
-    "build:msi": "msiwrapper-compiler --config=./dist/msi-wrapper.xml",
-    "dist": "npm run clean && npm run pack && npm run build:exe && npm run build:msi"
+    "pack": "electron-packager ./src --platform=win32 --arch=x64 --asar --overwrite --out ./dist",
+    "wix:heat": "cross-var wixtoolset-compiler heat --args=\"dir $npm_package_config_binaries -v -ag -cg ElectronBinaries -var var.SourceDir -dr APPLICATIONROOTDIRECTORY -srd -suid -sfrag -sreg -out ./dist/heat.wxs\"",
+    "copy:scripts": "cross-var copyfiles -f ./tools/scripts/*.* $npm_package_config_binaries",
+    "wix:candle": "cross-var wixtoolset-compiler candle --args=\"-v -ext WixUtilExtension -dSourceDir=$npm_package_config_binaries ./tools/product.wxs ./dist/heat.wxs -out ./dist/\"",
+    "wix:light": "wixtoolset-compiler light --args=\"-v -ext WixUtilExtension ./dist/product.wixobj ./dist/heat.wixobj -out ./dist/KioskDemoElectron.msi\"",
+    "build:msi": "npm run wix:heat && npm run copy:scripts && npm run wix:candle && npm run wix:light",
+    "dist": "npm run clean && npm run pack && npm run build:msi"
   },
   "devDependencies": {
+    "copyfiles": "^1.2.0",
+    "cross-var": "^1.0.3",
     "electron": "^1.7.5",
     "electron-packager": "^8.7.2",
-    "electron-winstaller": "^2.6.3",
-    "msiwrapper-compiler": "^1.0.2",
     "rimraf": "^2.6.1",
-    "string-template": "^1.0.0"
+    "wixtoolset-compiler": "^1.0.3"
   }
 }

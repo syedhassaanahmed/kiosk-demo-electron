@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <Product Id="*" Name="Kiosk Demo Electron" Language="1033" Version="1.0.0.0" Manufacturer="Syed Hassaan Ahmed" UpgradeCode="a8d48e7b-86a0-4171-8db8-6fb3618dfdc6">
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+    <MajorUpgrade Schedule="afterInstallInitialize" AllowDowngrades="no" DowngradeErrorMessage="ok" AllowSameVersionUpgrades="yes" />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Params passed to PowerShell scripts -->
+    <Property Id="KIOSK_USERNAME">kioskuser</Property>
+    <Property Id="KIOSK_PASSWORD">kioskpassword</Property>
+    <Property Id="EXE_NAME">kiosk-demo-electron.exe</Property>
+    <Property Id="AUTO_LOGON_COUNT">100</Property>
+    
+    <!-- Params used to generate settings.xml -->
+    <Property Id="SERVER_URL">https://localhost</Property>
+    <Property Id="TOKEN">12345</Property>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="Kiosk Demo Electron"/>
+      </Directory>
+    </Directory>
+
+    <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+      <Component Id="InstallShellLauncher" Guid="*">
+          <File Id="InstallShellLauncher" KeyPath="yes" Source="$(var.SourceDir)\Install-ShellLauncher.ps1" />
+      </Component>
+      <Component Id="UninstallShellLauncher" Guid="*">
+          <File Id="UninstallShellLauncher" KeyPath="yes" Source="$(var.SourceDir)\Uninstall-ShellLauncher.ps1" />
+      </Component>
+      
+      <Component Id="AppSettings" Guid="*">
+        <File Id="settings.xml" Source="$(var.SourceDir)\settings.xml" KeyPath="yes" Checksum="yes"/>
+        <util:XmlFile Id="ServerUrl"
+                  Action="setValue"
+                  ElementPath="/settings/serverUrl"
+                  File="[APPLICATIONROOTDIRECTORY]settings.xml" Value="[SERVER_URL]" />
+        <util:XmlFile Id="Token"
+                  Action="setValue"
+                  ElementPath="/settings/token"
+                  File="[APPLICATIONROOTDIRECTORY]settings.xml" Value="[TOKEN]" />
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id="MainApplication" Title="Main Application" Level="1">
+      <ComponentRef Id="InstallShellLauncher" />
+      <ComponentRef Id="UninstallShellLauncher" />
+      <ComponentRef Id="AppSettings" />
+      <ComponentGroupRef Id="ElectronBinaries" />
+    </Feature>
+
+    <!-- Install Shell Launcher -->
+    <CustomAction Id="InstallShellLauncher"
+                  Property="InvokeInstall"
+                  Value="&quot;powershell&quot; -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -File &quot;[APPLICATIONROOTDIRECTORY]Install-ShellLauncher.ps1&quot; &quot;[KIOSK_USERNAME]&quot; &quot;[KIOSK_PASSWORD]&quot; &quot;[APPLICATIONROOTDIRECTORY][EXE_NAME]&quot; &quot;[AUTO_LOGON_COUNT]&quot;"
+                  Execute="immediate"/>
+    <CustomAction Id="InvokeInstall"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec64"
+                  Execute="deferred"
+                  Return="check"
+                  Impersonate="no" />
+    
+    <!-- Uninstall Shell Launcher -->
+    <CustomAction Id="UninstallShellLauncher"
+                  Property="InvokeUninstall"
+                  Value="&quot;powershell&quot; -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -File &quot;[APPLICATIONROOTDIRECTORY]Uninstall-ShellLauncher.ps1&quot; &quot;[KIOSK_USERNAME]&quot;"
+                  Execute="immediate"/>
+    <CustomAction Id="InvokeUninstall"
+                  BinaryKey="WixCA"
+                  DllEntry="CAQuietExec64"
+                  Execute="deferred"
+                  Return="check"
+                  Impersonate="no" />
+
+    <InstallExecuteSequence>
+      <Custom Action="InstallShellLauncher" After="CostFinalize">NOT Installed</Custom>
+      <Custom Action="InvokeInstall" After="InstallFiles">NOT Installed</Custom>
+
+      <Custom Action="UninstallShellLauncher" After="CostFinalize">(NOT UPGRADINGPRODUCTCODE) AND (REMOVE="ALL")</Custom>
+      <Custom Action="InvokeUninstall" Before="RemoveFiles">(NOT UPGRADINGPRODUCTCODE) AND (REMOVE="ALL")</Custom>
+    </InstallExecuteSequence>
+
+  </Product>
+
+</Wix>

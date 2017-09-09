@@ -59,6 +59,3 @@ typings/
 
 # release directory
 dist
-
-# app config
-config.json

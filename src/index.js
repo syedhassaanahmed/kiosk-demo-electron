@@ -1,19 +1,12 @@
-const config = require('./config.json')
 const appInsights = require("applicationinsights")
-if (config.appInsightsInstrumentationKey !== undefined)
-    appInsights.setup(config.appInsightsInstrumentationKey)
+if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY !== undefined)
+    appInsights.setup()
         .setAutoDependencyCorrelation(true)
         .setAutoCollectRequests(true)
         .setAutoCollectPerformance(true)
         .setAutoCollectExceptions(true)
         .setAutoCollectDependencies(true)
         .start()
-
-const setupEvents = require('./installer/setupEvents')
-if (setupEvents.handleSquirrelEvent()) {
-    // squirrel event handled and app will exit, so don't do anything else
-    return
-}
 
 const { app, BrowserWindow} = require('electron')
 

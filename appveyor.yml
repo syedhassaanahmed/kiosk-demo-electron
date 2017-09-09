@@ -1,12 +1,9 @@
 install:
   - ps: Install-Product node 8
   - node --version
-  - npm install -g npm@5.2.0
+  - npm install npm@latest -g
   - npm --version
   - npm install
-  - ps: "[Net.ServicePointManager]::SecurityProtocol = 'Ssl3, Tls, Tls11, Tls12'"
-  - ps: Start-FileDownload 'https://www.exemsi.com/downloads/msi_wrapper/MSI_Wrapper_7_1_12_0.msi'
-  - ps: Start-Process msiexec -Wait -ArgumentList '/i MSI_Wrapper_7_1_12_0.msi /q'
 build_script:
  - npm run dist
 artifacts:

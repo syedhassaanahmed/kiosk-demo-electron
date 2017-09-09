@@ -39,6 +39,8 @@ try {
     $IsShellLauncherEnabled = $ShellLauncherClass.IsEnabled()
     LogWrite("Shell Launcher Enabled is set to " + $IsShellLauncherEnabled.Enabled)
 
+    Disable-WindowsOptionalFeature -online -FeatureName Client-EmbeddedShellLauncher -NoRestart
+
     # Reset Autologon registry
     $RegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
     Set-ItemProperty $RegPath "AutoAdminLogon" -Value "0" -type String  
