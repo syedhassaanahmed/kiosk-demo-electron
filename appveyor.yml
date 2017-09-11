@@ -8,7 +8,7 @@ build_script:
  - npm run dist
  - cd dist
  - msiexec /i "KioskDemoElectron.msi" /l*v "install.log" KIOSK_USERNAME=%username% SERVER_URL=https://ciserver TOKEN=citoken
+ - type %WINDIR%\SysWOW64\powershell.log
 artifacts:
   - path: .\dist\*.msi
   - path: .\dist\*.log
-  - path: "%WINDIR%\\SysWOW64\\powershell.log"
