@@ -9,8 +9,6 @@ This Electron App demonstrates multi-screen Kiosk mode experience by creating an
 ## Configure
 Kiosk parameters are passed to the installer like this: `KioskDemoElectron.msi KIOSK_USERNAME=<kiosk user> KIOSK_PASSWORD=<kiosk password>`. All params have a default value as can be seen in [product.wxs](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/tools/product.wxs).
 
-**NOTE:** When uninstalling please make sure you use the same `KIOSK_USERNAME` value, otherwise Shell Launcher will remain active.
-
 ## How it works
 - First we package the app using [electron-packager](https://github.com/electron-userland/electron-packager)
 - Then we harvest binaries produced by electron-packager using WiX's [Heat tool](http://wixtoolset.org/documentation/manual/v3/overview/heat.html).

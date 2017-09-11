@@ -22,10 +22,11 @@ try {
     }
     
     LogWrite("UserName is " + $UserName)
-    $Cashier_SID = Get-UsernameSID($UserName)
-    LogWrite("Cashier_SID is " + $Cashier_SID)
-    
+   
     try {
+        $Cashier_SID = Get-UsernameSID($UserName)
+        LogWrite("Cashier_SID is " + $Cashier_SID)
+        
         $ShellLauncherClass.RemoveCustomShell($Cashier_SID)
         } catch [Exception] {
             LogWrite("No existing custom shell found")
