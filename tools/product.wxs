@@ -65,7 +65,7 @@
     <!-- Uninstall Shell Launcher -->
     <CustomAction Id="UninstallShellLauncher"
                   Property="InvokeUninstall"
-                  Value="&quot;powershell&quot; -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -File &quot;[APPLICATIONROOTDIRECTORY]Uninstall-ShellLauncher.ps1&quot; &quot;[KIOSK_USERNAME]&quot;"
+                  Value="&quot;powershell&quot; -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -File &quot;[APPLICATIONROOTDIRECTORY]Uninstall-ShellLauncher.ps1&quot;"
                   Execute="immediate"/>
     <CustomAction Id="InvokeUninstall"
                   BinaryKey="WixCA"

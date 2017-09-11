@@ -19,21 +19,13 @@ try {
     $ShellLauncherClass.SetEnabled($TRUE)
     $IsShellLauncherEnabled = $ShellLauncherClass.IsEnabled()
     LogWrite("Shell Launcher Enabled is set to " + $IsShellLauncherEnabled.Enabled)
-
-    function Get-UsernameSID($AccountName) {
-        $NTUserObject = New-Object System.Security.Principal.NTAccount($AccountName)
-        $NTUserSID = $NTUserObject.Translate([System.Security.Principal.SecurityIdentifier])
-        return $NTUserSID.Value
-    }
     
-    LogWrite("UserName is " + $UserName)
-    $Cashier_SID = Get-UsernameSID($UserName)
-    LogWrite("Cashier_SID is " + $Cashier_SID)
-
-    try {
-        # Remove previous custom shell otherwise setting it again will fail
-        $ShellLauncherClass.RemoveCustomShell($Cashier_SID)
-        } catch [Exception] { }
+    # Remove previous custom shell otherwise setting it again will fail
+    $existingShell = Get-WmiObject -namespace $NAMESPACE -computer $COMPUTER -class WESL_UserSetting | Select-Object Sid
+    if ($existingShell.Sid -ne $null) {        
+        LogWrite("Removing existing custom shell for SID: " + $existingShell.Sid)
+        $ShellLauncherClass.RemoveCustomShell($existingShell.Sid)
+        }
     
     $restart_shell = 0
 
@@ -42,11 +34,22 @@ try {
     $DefaultShellObject = $ShellLauncherClass.GetDefaultShell()        
     LogWrite("Default Shell is set to " + $DefaultShellObject.Shell + " and the default action is set to " + $DefaultShellObject.defaultaction)
 
+    LogWrite("UserName is " + $UserName)
+
+    function Get-UsernameSID($AccountName) {
+        $NTUserObject = New-Object System.Security.Principal.NTAccount($AccountName)
+        $NTUserSID = $NTUserObject.Translate([System.Security.Principal.SecurityIdentifier])
+        return $NTUserSID.Value
+    }
+
+    $Cashier_SID = Get-UsernameSID($UserName)
+    LogWrite("Cashier_SID is " + $Cashier_SID)
+
     LogWrite("ExeName is " + $ExeName)    
     $ShellLauncherClass.SetCustomShell($Cashier_SID, $ExeName, ($null), ($null), $restart_shell)
     
-    LogWrite("New settings for custom shells:")
-    $shellSetting = Get-WmiObject -namespace $NAMESPACE -computer $COMPUTER -class WESL_UserSetting | Select-Object Sid, Shell, DefaultAction
+    LogWrite("New settings for custom shell:")
+    $shellSetting = Get-WmiObject -namespace $NAMESPACE -computer $COMPUTER -class WESL_UserSetting | Select-Object *
     LogWrite($shellSetting)
 
     # Set Autologon registry

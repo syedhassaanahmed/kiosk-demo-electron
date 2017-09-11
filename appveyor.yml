@@ -6,5 +6,10 @@ install:
   - npm install
 build_script:
  - npm run dist
+ - cd dist
+ - msiexec /i "KioskDemoElectron.msi" /l*v "install.log" KIOSK_USERNAME=%username% SERVER_URL=https://testserver TOKEN=12345
+ - msiexec /x "KioskDemoElectron.msi" /l*v "uninstall.log"
 artifacts:
   - path: .\dist\*.msi
+  - path: .\dist\*.log
+  - path: C:\Windows\SysWOW64\powershell.log

@@ -1,5 +1,3 @@
-param($UserName)
-
 function LogWrite
 {
    param ($Logstring)
@@ -15,25 +13,17 @@ try {
 
     $ShellLauncherClass = [wmiclass]"\\$COMPUTER\${NAMESPACE}:WESL_UserSetting"
     
-    function Get-UsernameSID($AccountName) {
-        $NTUserObject = New-Object System.Security.Principal.NTAccount($AccountName)
-        $NTUserSID = $NTUserObject.Translate([System.Security.Principal.SecurityIdentifier])
-        return $NTUserSID.Value
+    $existingShell = Get-WmiObject -namespace $NAMESPACE -computer $COMPUTER -class WESL_UserSetting | Select-Object Sid
+    if ($existingShell.Sid -ne $null) {        
+        LogWrite("Removing existing custom shell for SID: " + $existingShell.Sid)
+        $ShellLauncherClass.RemoveCustomShell($existingShell.Sid)
+        }
+    else {
+        LogWrite("No existing custom shell found")
     }
     
-    LogWrite("UserName is " + $UserName)
-   
-    try {
-        $Cashier_SID = Get-UsernameSID($UserName)
-        LogWrite("Cashier_SID is " + $Cashier_SID)
-        
-        $ShellLauncherClass.RemoveCustomShell($Cashier_SID)
-        } catch [Exception] {
-            LogWrite("No existing custom shell found")
-        }
-    
     LogWrite("New settings for custom shells:")
-    $shellSetting = Get-WmiObject -namespace $NAMESPACE -computer $COMPUTER -class WESL_UserSetting | Select-Object Sid, Shell, DefaultAction
+    $shellSetting = Get-WmiObject -namespace $NAMESPACE -computer $COMPUTER -class WESL_UserSetting | Select-Object *
     LogWrite($shellSetting)
     
     $ShellLauncherClass.SetEnabled($FALSE)
