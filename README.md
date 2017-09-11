@@ -17,6 +17,12 @@ Kiosk parameters are passed to the installer like this: `KioskDemoElectron.msi K
 - Finally we use the [Light tool](http://wixtoolset.org/documentation/manual/v3/overview/light.html) to generate msi from .wixobj.
 - PowerShell Scripts are executed from [WiX Custom Actions](https://damienbod.com/2013/09/01/wix-installer-with-powershell-scripts/).
 
+## Why WiX instead of electron-winstaller (Squirrel.Windows)?
+In our case, WiX provides lot of flexibility in terms of configuring the installer;
+- Passing params to the setup
+- Executing elevated PowerShell during install/uninstall events
+- Modifying config files based on setup params
+
 ## Troubleshoot
 Msi logging can be enabled by executing the installer like this: `msiexec /i "setup.msi" /l*v "msi.log" PARAM=VALUE`. PowerShell log will be located at `C:\Windows\SysWOW64\powershell.log`.
 
