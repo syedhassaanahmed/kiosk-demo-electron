@@ -7,8 +7,7 @@ install:
 build_script:
  - npm run dist
  - cd dist
- - msiexec /i "KioskDemoElectron.msi" /l*v "install.log" KIOSK_USERNAME=%username% SERVER_URL=https://testserver TOKEN=12345
- - msiexec /x "KioskDemoElectron.msi" /l*v "uninstall.log"
+ - msiexec /i "KioskDemoElectron.msi" /l*v "install.log" KIOSK_USERNAME=%username% SERVER_URL=https://ciserver TOKEN=citoken
 artifacts:
   - path: .\dist\*.msi
   - path: .\dist\*.log
