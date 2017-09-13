@@ -4,7 +4,7 @@
   "main": "./src/index.js",
   "config": {
     "binaries": "./dist/kiosk-demo-electron-win32-x64",
-    "wix": "xvfb-run -a wine ./node_modules/wixtoolset-compiler/bin"
+    "wix": "wine ./node_modules/wixtoolset-compiler/bin"
   },
   "scripts": {
     "start": "electron .",
@@ -20,7 +20,7 @@
     "heat:wine": "$npm_package_config_wix/heat.exe dir $npm_package_config_binaries -v -ag -cg ElectronBinaries -var var.SourceDir -dr APPLICATIONROOTDIRECTORY -srd -suid -sfrag -sreg -out ./dist/heat.wxs",
     "candle:wine": "$npm_package_config_wix/candle.exe -v -ext WixUtilExtension -dSourceDir=$npm_package_config_binaries ./tools/product.wxs ./dist/heat.wxs -out ./dist/",
     "light:wine": "$npm_package_config_wix/light.exe -v -ext WixUtilExtension -sval ./dist/product.wixobj ./dist/heat.wixobj -out ./dist/KioskDemoElectron.msi",
-    "build:wine": "run-s heat:wine copyScripts candle:wine light:wine",
+    "build:wine": "run-s heat:wine copyScripts candle:wine",
     "dist:wine": "run-s clean pack build:wine",
     "docker:build": "cross-conf-env docker build --rm -t npm_package_name .",
     "docker:create": "cross-conf-env docker create --name npm_package_name npm_package_name",

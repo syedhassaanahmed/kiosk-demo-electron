@@ -5,12 +5,11 @@ before_install:
   - npm i -g npm@latest
   - sudo apt-get -qq update
   - sudo apt-get install -y wine
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
 script:
-  - xvfb-run -a wine
   - npm run dist:wine
+addons:
+  artifacts:
+    paths:
+    - ./dist/*.wxs
 notifications:
   email: false
