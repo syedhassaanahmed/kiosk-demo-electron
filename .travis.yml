@@ -8,9 +8,6 @@ before_install:
 script:
   - npm run dist:wine
   - cat ./dist/heat.wxs
-addons:
-  artifacts:
-    paths:
-    - ./dist/*.msi
+  - ls ./dist/kiosk-demo-electron-win32-x64
 notifications:
   email: false
