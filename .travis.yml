@@ -7,9 +7,10 @@ before_install:
   - sudo apt-get install -y wine
 script:
   - npm run dist:wine
+  - cat ./dist/heat.wxs
 addons:
   artifacts:
     paths:
-    - ./dist/*.wxs
+    - ./dist/*.msi
 notifications:
   email: false
