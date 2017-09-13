@@ -1,11 +1,9 @@
 language: node_js
 node_js:
   - "8"
-before_install:
-  - npm i -g npm@latest
-  - sudo apt-get -qq update
-  - sudo apt-get install -y wine
+services:
+  - docker
 script:
-  - npm run dist:wine
+  - npm run dist:docker
 notifications:
   email: false
