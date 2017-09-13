@@ -22,7 +22,7 @@
     "light:wine": "$npm_package_config_wix/light.exe -v -ext WixUtilExtension -sval ./dist/product.wixobj ./dist/heat.wixobj -out ./dist/KioskDemoElectron.msi",
     "build:wine": "run-s heat:wine copyScripts candle:wine light:wine",
     "dist:wine": "run-s clean pack build:wine",
-    "docker:build": "cross-conf-env docker build --rm -t npm_package_name .",
+    "docker:build": "cross-conf-env docker build -t npm_package_name .",
     "docker:create": "cross-conf-env docker create --name npm_package_name npm_package_name",
     "docker:copy": "cross-conf-env docker cp npm_package_name:/home/wix/src/dist/ ./dist",
     "docker:remove": "cross-conf-env docker rm -f npm_package_name",
