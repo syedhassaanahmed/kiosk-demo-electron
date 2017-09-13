@@ -4,7 +4,7 @@
   "main": "./src/index.js",
   "config": {
     "binaries": "./dist/kiosk-demo-electron-win32-x64",
-    "wix": "wine ./node_modules/wixtoolset-compiler/bin"
+    "wix": "xvfb-run -a wine ./node_modules/wixtoolset-compiler/bin"
   },
   "scripts": {
     "start": "electron .",
