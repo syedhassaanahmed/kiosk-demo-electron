@@ -10,7 +10,7 @@
     "start": "electron .",
     "postinstall": "cd src && npm install",
     "clean": "rimraf ./dist",
-    "pack": "electron-packager ./src --platform=win32 --arch=x64 --asar --overwrite --out ./dist",
+    "pack": "cross-env DEBUG=electron-packager electron-packager ./src --platform=win32 --arch=x64 --asar --overwrite --out ./dist",
     "heat": "wixtoolset-compiler heat --args=\"dir %npm_package_config_binaries% -v -ag -cg ElectronBinaries -var var.SourceDir -dr APPLICATIONROOTDIRECTORY -srd -suid -sfrag -sreg -out ./dist/heat.wxs\"",
     "copyScripts": "cross-conf-env copyfiles -f ./tools/scripts/*.* npm_package_config_binaries",
     "candle": "wixtoolset-compiler candle --args=\"-v -ext WixUtilExtension -dSourceDir=%npm_package_config_binaries% ./tools/product.wxs ./dist/heat.wxs -out ./dist/\"",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "copyfiles": "^1.2.0",
     "cross-conf-env": "^1.1.2",
+    "cross-env": "^5.0.5",
     "electron": "^1.7.6",
     "electron-packager": "^9.0.1",
     "npm-run-all": "^4.1.1",
