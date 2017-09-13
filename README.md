@@ -4,7 +4,9 @@
 This Electron App demonstrates multi-screen Kiosk mode experience by creating an .msi package which executes [PowerShell scripts](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/tools/scripts/Install-ShellLauncher.ps1). Scripts toggle [Windows 10 Shell Launcher](https://docs.microsoft.com/en-us/windows-hardware/customize/enterprise/shell-launcher) as well as set the kiosk user to [AutoLogon](https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon). Creating an .msi makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
 
 ## Create Installer
-`npm run dist` will build everything and create the .msi in `dist` folder.
+- On Windows `npm run dist` will build everything and create the .msi in `dist` folder.
+- On Linux use `npm run dist:wine`. Script assumes that Wine is properly configured. 
+- If you'd like to use Docker, `npm run dist:docker` will spin up an instance of [this image](https://hub.docker.com/r/syedhassaanahmed/wix-node/), execute the above wine script and then copy artifacts back to host's `dist` folder. Script assumes that Docker daemon is running on host.
 
 ## Configure
 Kiosk parameters are passed to the installer like this: `KioskDemoElectron.msi KIOSK_USERNAME=<kiosk user> KIOSK_PASSWORD=<kiosk password>`. All params have a default value as can be seen in [product.wxs](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/tools/product.wxs).
