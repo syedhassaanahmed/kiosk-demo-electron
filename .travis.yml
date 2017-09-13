@@ -7,7 +7,5 @@ before_install:
   - sudo apt-get install -y wine
 script:
   - npm run dist:wine
-  - cat ./dist/heat.wxs
-  - ls ./dist/kiosk-demo-electron-win32-x64
 notifications:
   email: false
