@@ -8,7 +8,7 @@ This Electron App demonstrates multi-screen Kiosk mode experience by creating an
 `npm run dist` will build everything and create the MSI in `dist` folder.
 
 ### Linux
-Use `npm run dist:wine`. Script assumes that Wine is installed and properly configured. If the full path of any of your electron-packager output files is longer than 128 chars, you'll run into [error LGHT0103 : The system cannot find the file](https://github.com/wixtoolset/issues/issues/5314#issuecomment-329188877). **Note:** `Light.exe` has a [known issue with MSI validation on Wine](https://appdb.winehq.org/objectManager.php?sClass=version&iId=16248&iTestingId=39182) so it had to be turned off with `-sval` flag.
+Use `npm run dist:wine`. Script assumes that `Wine` and `dotnet40` (using `winetricks`) are installed and properly configured. If the full path of any of your electron-packager output files is longer than 128 chars, you'll run into [error LGHT0103 : The system cannot find the file](https://github.com/wixtoolset/issues/issues/5314#issuecomment-329188877). **Note:** `Light.exe` has a [known issue with MSI validation on Wine](https://appdb.winehq.org/objectManager.php?sClass=version&iId=16248&iTestingId=39182) so it had to be turned off with `-sval` flag.
 
 ### Docker
 `npm run dist:docker` will spin up an instance of [this image](https://hub.docker.com/r/syedhassaanahmed/wix-node/), execute the above wine script and then copy artifacts back to host's `dist` folder. Script assumes that Docker daemon is running on host.
