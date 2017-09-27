@@ -1,15 +1,32 @@
+<#
+.SYNOPSIS
+  This script enables Windows Shell Launcher and sets provided executable as Custom Shell for the specified user.
+  It also modifies registry to enable AutoLogon for specified user.
+.PARAMETER UserName
+    Username for whom Custom Shell needs to be enabled
+.PARAMETER Password
+    Password of the Custom Shell user (required for AutoLogon)
+.PARAMETER ExeName
+    Full path of Win32 Executable to be set as Custom Shell
+.PARAMETER AutoLogonCount
+    Number of times AutoLogon is allowed before Windows will ask for Credentials
+.OUTPUTS
+  Log file stored in C:\Windows\SysWOW64\powershell.log
+.EXAMPLE
+  Install-ShellLauncher 'kioskuser' 'password' 'c:\mywin32app.exe' 100
+#>
+
 param($UserName, $Password, $ExeName, $AutoLogonCount)
 
-function LogWrite
-{
-   param ($Logstring)
-   $Logstring = "`n" + (Get-Date).ToUniversalTime() + " " + $Logstring
-   Add-content "powershell.log" -value $Logstring
-   Write-Host $Logstring
+function LogWrite {
+    param ($Logstring)
+    $Logstring = "`n" + (Get-Date).ToUniversalTime() + " " + $Logstring
+    Add-content "powershell.log" -value $Logstring
+    Write-Host $Logstring
 }
 
 try {
-
+    
     Enable-WindowsOptionalFeature -online -FeatureName Client-EmbeddedShellLauncher -all -NoRestart
        
     $COMPUTER = "localhost"
@@ -25,7 +42,7 @@ try {
     if ($existingShell.Sid -ne $null) {        
         LogWrite("Removing existing custom shell for SID: " + $existingShell.Sid)
         $ShellLauncherClass.RemoveCustomShell($existingShell.Sid)
-        }
+    }
     
     $restart_shell = 0
 
@@ -59,6 +76,7 @@ try {
     Set-ItemProperty $RegPath "DefaultPassword" -Value "$Password" -type String
     Set-ItemProperty $RegPath "AutoLogonCount" -Value "$AutoLogonCount" -type DWord
 
-} catch [Exception] {
+}
+catch [Exception] {
     LogWrite($_.Exception.Message)
 }

@@ -14,7 +14,11 @@ Use `npm run dist:wine`. Script assumes that `Wine` and `dotnet40` (using `winet
 `npm run dist:docker` will spin up an instance of [this image](https://hub.docker.com/r/syedhassaanahmed/wix-node/), execute the above wine script and then copy artifacts back to host's `dist` folder. Script assumes that Docker daemon is running on host.
 
 ## Configure
-Kiosk parameters are passed to the installer like this: `KioskDemoElectron.msi KIOSK_USERNAME=<kiosk user> KIOSK_PASSWORD=<kiosk password>`. All params have a default value as can be seen in [product.wxs](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/tools/product.wxs).
+Kiosk parameters are passed to the installer like this: 
+```
+KioskDemoElectron.msi KIOSK_USERNAME=<kiosk user> KIOSK_PASSWORD=<kiosk password>
+```
+All params have a default value as can be seen in [product.wxs](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/tools/product.wxs).
 
 ## How it works
 - First we package the app using [electron-packager](https://github.com/electron-userland/electron-packager)
@@ -31,7 +35,11 @@ In our case, WiX provides lot of flexibility in terms of configuring the install
 - Modifying config files based on setup params
 
 ## Troubleshoot
-MSI logging can be enabled by executing the installer like this: `msiexec /i "setup.msi" /l*v "msi.log" PARAM=VALUE`. PowerShell log will be located at `C:\Windows\SysWOW64\powershell.log`.
+MSI logging can be enabled by executing the installer like this:
+```
+msiexec /i "setup.msi" /l*v "msi.log" PARAM=VALUE
+```
+PowerShell log will be written in `C:\Windows\SysWOW64\powershell.log`.
 
 ## Telemetry
 The solution uses [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-nodejs) to collect basic telemetry data from the app. To enable it, please create an environment variable named `APPINSIGHTS_INSTRUMENTATIONKEY` and set it to the Instrumentation Key obtained from Azure portal.

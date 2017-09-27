@@ -1,13 +1,22 @@
-function LogWrite
-{
-   param ($Logstring)
-   $Logstring = "`n" + (Get-Date).ToUniversalTime() + " " + $Logstring
-   Add-content "powershell.log" -value $Logstring
-   Write-Host $Logstring
+<#
+.SYNOPSIS
+  This script removes Custom Shell and disables Windows Shell Launcher.
+  It also removes AutoLogon from windows registry.
+.OUTPUTS
+  Log file stored in C:\Windows\SysWOW64\powershell.log
+.EXAMPLE
+  Uninstall-ShellLauncher
+#>
+
+function LogWrite {
+    param ($Logstring)
+    $Logstring = "`n" + (Get-Date).ToUniversalTime() + " " + $Logstring
+    Add-content "powershell.log" -value $Logstring
+    Write-Host $Logstring
 }
 
 try {
-
+    
     $COMPUTER = "localhost"
     $NAMESPACE = "root\standardcimv2\embedded"
 
@@ -17,7 +26,7 @@ try {
     if ($existingShell.Sid -ne $null) {        
         LogWrite("Removing existing custom shell for SID: " + $existingShell.Sid)
         $ShellLauncherClass.RemoveCustomShell($existingShell.Sid)
-        }
+    }
     else {
         LogWrite("No existing custom shell found")
     }
@@ -39,6 +48,7 @@ try {
     Set-ItemProperty $RegPath "DefaultPassword" -Value "" -type String
     Set-ItemProperty $RegPath "AutoLogonCount" -Value "0" -type DWord
 
-} catch [Exception] {
+}
+catch [Exception] {
     LogWrite($_.Exception.Message)
 }
