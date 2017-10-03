@@ -1,9 +1,9 @@
 {
     "dependencies": {
         "applicationinsights": "^0.22.0",
-        "express": "^4.15.4",
+        "express": "^4.16.1",
         "jquery": "^3.2.1",
         "jquery-ui-dist": "^1.12.1",
-        "serve-static": "^1.12.4"
+        "serve-static": "^1.13.1"
     }
 }
