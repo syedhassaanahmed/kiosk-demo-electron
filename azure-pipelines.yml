@@ -10,28 +10,17 @@ jobs:
     inputs:
       versionSpec: $(node_version)
 
-  - script: |
+  - powershell: |
       npm install
       npm run dist
       cd dist
-      msiexec /i "KioskDemoElectron.msi" /l*v "install.log" KIOSK_USERNAME=%username% SERVER_URL=https://ciserver TOKEN=citoken
-      type %WINDIR%\SysWOW64\powershell.log
+      & "msiexec /i KioskDemoElectron.msi /l*v install.log KIOSK_USERNAME=$env:username SERVER_URL=https://ciserver TOKEN=citoken"
+      Get-Content install.log
+      Get-Content $env:WINDIR\SysWOW64\powershell.log
 
 - job: Linux
   pool:
     vmImage: 'ubuntu-16.04'
-  steps:
-  - task: NodeTool@0 
-    inputs:
-      versionSpec: $(node_version)
-
-  - script: |
-      npm install
-      npm run dist:docker
-
-- job: macOS
-  pool:
-    vmImage: 'macOS-10.13'
   steps:
   - task: NodeTool@0 
     inputs:
