@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "11"
+services:
+  - docker
+script:
+  - npm run dist:docker
+notifications:
+  email: false
