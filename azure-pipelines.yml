@@ -14,7 +14,7 @@ jobs:
       npm install
       npm run dist
       cd dist
-      & "msiexec /i KioskDemoElectron.msi /l*v install.log KIOSK_USERNAME=$env:username SERVER_URL=https://ciserver TOKEN=citoken"
+      Start-Process msiexec.exe -Wait -NoNewWindow -ArgumentList '/i KioskDemoElectron.msi /l*v install.log KIOSK_USERNAME=$env:username SERVER_URL=https://ciserver TOKEN=citoken'
       Get-Content install.log
       Get-Content $env:WINDIR\SysWOW64\powershell.log
 
