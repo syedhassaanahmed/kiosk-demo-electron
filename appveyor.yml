@@ -1,16 +1,20 @@
-image: Visual Studio 2017
+image:
+- Visual Studio 2019
+- Ubuntu
+environment:
+  nodejs_version: 12.6.0
 install:
-  - ps: Install-Product node 11
-  - node --version
-  - npm install npm@latest -g
-  - npm --version
-  - npm install
+- cmd: powershell Install-Product node $env:nodejs_version
+- sh: nvm install $nodejs_version
 build_script:
- - npm run dist
- - cd dist
- - msiexec /i "KioskDemoElectron.msi" /l*v "install.log" KIOSK_USERNAME=%username% SERVER_URL=https://ciserver TOKEN=citoken
- - type %WINDIR%\SysWOW64\powershell.log
+- npm install
+- cmd: |
+    npm run dist
+    cd dist
+    msiexec /i "KioskDemoElectron.msi" /l*v "install.log" KIOSK_USERNAME=%username% SERVER_URL=https://ciserver TOKEN=citoken
+    type %WINDIR%\SysWOW64\powershell.log
+- sh: npm run dist:docker
 test: off
 artifacts:
-  - path: .\dist\*.msi
-  - path: .\dist\*.log
+- path: .\dist\*.msi
+- path: .\dist\*.log
