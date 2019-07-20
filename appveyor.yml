@@ -3,8 +3,8 @@ image:
 - Ubuntu
 stack: node 12.6.0
 build_script:
+- npm install
 - cmd: |
-    npm install
     npm run dist
     cd dist
     msiexec /i "KioskDemoElectron.msi" /l*v "install.log" KIOSK_USERNAME=%username% SERVER_URL=https://ciserver TOKEN=citoken
