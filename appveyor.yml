@@ -1,7 +1,7 @@
 image:
 - Visual Studio 2019
 - Ubuntu
-stack: node 12.6.0
+stack: node 12.16.3
 build_script:
 - npm install
 - cmd: |

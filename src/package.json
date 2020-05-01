@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "applicationinsights": "^1.4.0",
+        "applicationinsights": "^1.7.5",
         "express": "^4.17.1",
         "jquery": "^3.5.0",
         "jquery-ui-dist": "^1.12.1",
