@@ -4,7 +4,7 @@ image:
 environment:
   nodejs_version: 14
 install:
-  - ps: Install-Product node $env:nodejs_version
+  - cmd: powershell Install-Product node $env:nodejs_version
   - sh: nvm install $nodejs_version
   - node -v
   - npm -v
