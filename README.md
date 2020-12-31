@@ -1,7 +1,7 @@
 # kiosk-demo-electron
 [![Build status](https://ci.appveyor.com/api/projects/status/um6ul6dbwjrw913m/branch/master?svg=true)](https://ci.appveyor.com/project/syedhassaanahmed/kiosk-demo-electron/branch/master)
 
-This Electron App demonstrates multi-screen Kiosk mode experience by creating an MSI package which executes [PowerShell scripts](https://github.com/syedhassaanahmed/kiosk-demo-electron/blob/master/tools/scripts/Install-ShellLauncher.ps1). Scripts toggle [Windows 10 Shell Launcher](https://docs.microsoft.com/en-us/windows-hardware/customize/enterprise/shell-launcher) as well as set the kiosk user to [AutoLogon](https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon). Creating an MSI makes sure we can distribute our app to multiple kiosks via MDM e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
+This repository demonstrates how to package and distribute an Electron App which runs in Kiosk mode on Windows 10. It uses the [Windows 10 Shell Launcher](https://docs.microsoft.com/en-us/windows-hardware/customize/enterprise/shell-launcher) as well as set the kiosk user to [AutoLogon](https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon). Packaging the app as an MSI makes sure we can distribute it to multiple kiosks via an MDM solution e.g [Microsoft Intune](https://docs.microsoft.com/en-us/intune/apps-add).
 
 **Note:** Shell Launcher feature requires [Windows 10 Enterprise Edition](https://stackoverflow.com/questions/41504006/enabling-windows-10-kiosk-mode-using-embedded-shell-launcher).
 
