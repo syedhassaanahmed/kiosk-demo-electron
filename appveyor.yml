@@ -6,8 +6,6 @@ environment:
 install:
   - cmd: powershell Install-Product node $env:nodejs_version
   - sh: nvm install $nodejs_version
-  - node -v
-  - npm -v
   - npm install
 build_script:
 - cmd: |
