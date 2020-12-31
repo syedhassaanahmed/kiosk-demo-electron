@@ -1,8 +1,10 @@
 image:
 - Visual Studio 2019
 - Ubuntu
-stack: node 14.15.0
+stack: node 14.15.3
 build_script:
+- npm -v
+- node -v
 - npm install
 - cmd: |
     npm run dist
