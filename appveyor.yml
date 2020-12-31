@@ -1,8 +1,11 @@
 image:
 - Visual Studio 2019
 - Ubuntu
+environment:
+  nodejs_version: 14
 install:
-  - ps: Install-Product node 14
+  - ps: Install-Product node $env:nodejs_version
+  - sh: nvm install $nodejs_version
   - node -v
   - npm -v
   - npm install
