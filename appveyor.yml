@@ -1,7 +1,7 @@
 image:
 - Visual Studio 2019
 - Ubuntu
-stack: node 14
+stack: node 14.15.1
 build_script:
 - npm -v
 - node -v
