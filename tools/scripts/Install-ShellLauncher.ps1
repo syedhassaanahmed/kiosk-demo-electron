@@ -46,7 +46,7 @@ try {
     
     $restart_shell = 0
 
-    # Explicitly set default shell to explorer.exe otherwise modifying cutom shell would change it to cmd.exe for users other than cashier
+    # Explicitly set default shell to explorer.exe otherwise modifying custom shell would change it to cmd.exe for all users
     $ShellLauncherClass.SetDefaultShell("explorer.exe", $restart_shell)
     $DefaultShellObject = $ShellLauncherClass.GetDefaultShell()        
     LogWrite("Default Shell is set to " + $DefaultShellObject.Shell + " and the default action is set to " + $DefaultShellObject.defaultaction)
@@ -59,11 +59,11 @@ try {
         return $NTUserSID.Value
     }
 
-    $Cashier_SID = Get-UsernameSID($UserName)
-    LogWrite("Cashier_SID is " + $Cashier_SID)
+    $User_SID = Get-UsernameSID($UserName)
+    LogWrite("User_SID is " + $User_SID)
 
     LogWrite("ExeName is " + $ExeName)    
-    $ShellLauncherClass.SetCustomShell($Cashier_SID, $ExeName, ($null), ($null), $restart_shell)
+    $ShellLauncherClass.SetCustomShell($User_SID, $ExeName, ($null), ($null), $restart_shell)
     
     LogWrite("New settings for custom shell:")
     $shellSetting = Get-WmiObject -namespace $NAMESPACE -computer $COMPUTER -class WESL_UserSetting | Select-Object *
