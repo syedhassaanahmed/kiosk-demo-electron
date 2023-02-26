@@ -1,11 +1,10 @@
 image:
 - Visual Studio 2022
-- Ubuntu
+- Ubuntu2004
 environment:
   nodejs_version: 18
 install:
-  - cmd: powershell Install-Product node $env:nodejs_version
-  - sh: nvm install $nodejs_version
+  - ps: Install-Product node $env:nodejs_version
   - npm install
 build_script:
 - cmd: |
