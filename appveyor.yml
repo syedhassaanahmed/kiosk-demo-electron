@@ -1,8 +1,8 @@
 image:
-- Visual Studio 2019
+- Visual Studio 2022
 - Ubuntu
 environment:
-  nodejs_version: 14
+  nodejs_version: 18
 install:
   - cmd: powershell Install-Product node $env:nodejs_version
   - sh: nvm install $nodejs_version
@@ -20,7 +20,7 @@ for:
 -
   matrix:
     only:
-      - image: Visual Studio 2019
+      - image: Visual Studio 2022
   artifacts:
   - path: .\dist\*.msi
   - path: .\dist\*.log

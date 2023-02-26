@@ -1,8 +1,7 @@
-FROM syedhassaanahmed/wix-node
+FROM ghcr.io/syedhassaanahmed/node-wine:main
 
-RUN mkdir /home/wix/src
-WORKDIR /home/wix/src
-COPY --chown=wix . .
+WORKDIR /kioskapp
+COPY . .
 
 RUN npm install
 RUN npm run dist:wine
