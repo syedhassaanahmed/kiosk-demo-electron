@@ -43,6 +43,6 @@
     "wixtoolset-compiler": "^1.0.3"
   },
   "dependencies": {
-    "npm": "^9.5.1"
+    "npm": "^10.8.2"
   }
 }
